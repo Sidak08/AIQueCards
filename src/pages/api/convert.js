@@ -1,11 +1,16 @@
 const speech = require("@google-cloud/speech");
-const {Storage} = require('@google-cloud/storage');
+const fs = require('fs')
 
 export default async function convert(req, res) {
-	const client = new speech.SpeechClient();
-	
-	const storage = new Storage({keyFilename: 'lecture.mp3'});
-//  const gcsUri = "";
+	try {	
+		fs.writeFileSync("../../../audio/lecture.wav", req.body)
+	} catch (err) {
+		console.error(err)
+		return res.status(500).json({ message: "internal server error" })
+	}	
+
+
+	//  const gcsUri = "";
 //
 //  const audio = {
 //    uri: gcsUri,

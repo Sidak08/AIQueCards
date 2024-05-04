@@ -9,15 +9,11 @@ import { Sparkels } from "@/components/homepage/Sparkels";
 import Spotlight from "@/components/ui/spotlight";
 import Card from "../components/common/Card.js";
 
-
-
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
     <main>
-
-      {/* whole first view port */}
       <div>
         <Navbar />
         <Introduction />
@@ -33,16 +29,12 @@ export default function Home() {
             />
           </ContainerScroll>
         </div>
-
         <Spotlight
           className="absolute z-[100] -top-40 left-0 md:left-60 md:-top-20"
           fill="white"
         />
-
         <Sparkels />
-
       </div>
-
       {/* three cards  */}
       <div className="top-[700px] w-full inter pb-8 relative text-white">
         <p className="text-5xl text-center mb-3">How It Works ?</p>
@@ -51,10 +43,6 @@ export default function Home() {
         </p>
         <Card className={"w-[100vw] "} />
       </div>
-
-
-
-
     </main>
   );
 }
