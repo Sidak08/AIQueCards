@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import Image from "next/image";
 import city from "../assets/alys-chen-20200929-1-3.jpg";
 import { Sparkels } from "@/components/homepage/Sparkels";
+import Spotlight from "@/components/ui/spotlight";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,7 +30,14 @@ export default function Home() {
           </ContainerScroll>
         </div>
 
+        <Spotlight
+          className="absolute z-[100] -top-40 left-0 md:left-60 md:-top-20"
+          fill="white"
+        />
+
         <Sparkels />
+
+        
 
         
       </div>
