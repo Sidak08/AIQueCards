@@ -5,6 +5,8 @@ import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import city from "../assets/alys-chen-20200929-1-3.jpg";
+import { Sparkels } from "@/components/homepage/Sparkels";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +28,8 @@ export default function Home() {
             />
           </ContainerScroll>
         </div>
+
+        <Sparkels />
 
         
       </div>
