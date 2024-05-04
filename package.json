@@ -7,23 +7,29 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-  }, 
+  },
   "dependencies": {
     "@google-cloud/speech": "^6.5.0",
     "@google-cloud/storage": "^7.10.2",
     "@google/generative-ai": "^0.10.0",
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/drawing_utils": "^0.3.1675466124",
+    "@mediapipe/holistic": "^0.5.1675471629",
     "@tsparticles/engine": "^3.3.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.3.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",
+    "install": "^0.13.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "^14.2.3",
+    "npm": "^10.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-webcam": "^7.2.0",
+    "swiper": "^11.1.1",
     "tailwind-merge": "^2.3.0",
-    "zod": "^3.23.6",
-    "swiper": "^11.1.1"
+    "zod": "^3.23.6"
   },
   "devDependencies": {
     "@types/node": "20.12.8",
