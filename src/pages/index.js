@@ -7,6 +7,8 @@ import Image from "next/image";
 import city from "../assets/alys-chen-20200929-1-3.jpg";
 import { Sparkels } from "@/components/homepage/Sparkels";
 import Spotlight from "@/components/ui/spotlight";
+import Card from "../components/common/Card.js";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,6 +16,8 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <main>
+
+      {/* whole first view port */}
       <div>
         <Navbar />
         <Introduction />
@@ -37,10 +41,20 @@ export default function Home() {
 
         <Sparkels />
 
-        
-
-        
       </div>
+
+      {/* three cards  */}
+      <div className="top-[700px] w-full inter pb-8 relative text-white">
+        <p className="text-5xl text-center mb-3">How It Works ?</p>
+        <p className="text-[#bec2c4] opacity-80 lexend text-center mb-8">
+          Discover Your Perfect cards in 3 Simple Steps :{" "}
+        </p>
+        <Card className={"w-[100vw] "} />
+      </div>
+
+
+
+
     </main>
   );
 }
