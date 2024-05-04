@@ -17,11 +17,17 @@
     "@tsparticles/slim": "^3.3.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.1.7",
+    "mini-svg-data-uri": "^1.4.4",
     "next": "^14.2.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+<<<<<<< HEAD
     "tailwind-merge": "^2.3.0",
     "zod": "^3.23.6"
+=======
+    "swiper": "^11.1.1",
+    "tailwind-merge": "^2.3.0"
+>>>>>>> 265caf3fdf7701e26947c46bd8a710e3a6da8ca4
   },
   "devDependencies": {
     "@types/node": "20.12.8",
