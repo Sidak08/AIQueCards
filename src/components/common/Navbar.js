@@ -10,7 +10,6 @@ const Navbar = () => {
 
         <div className={"cursor-pointer akira transition-all duration-200 hover:text-[#28ff28] "}  onClick={() => { router.push("/") }} ><span className='text-white'>Name</span><span>yyyy</span></div>
 
-      
     </div>
   )
 }

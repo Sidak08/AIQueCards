@@ -2,3 +2,131 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lexend:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+    background-color: black;
+    overflow-x: hidden;
+}
+
+.white{
+    color: white ;
+}
+
+.lexend {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .inter {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings:
+      "slnt" 0;
+  }
+
+.bottomShadow{
+    background: rgba(0, 0, 0, 0.65);
+
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7.6px);
+-webkit-backdrop-filter: blur(7.6px);
+border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: rgba(102, 116, 204, 0.25) 0px 4px 10px;
+}
+
+/* @font-face {
+    font-family: "Akira";
+    src: url("../src/assets/fonts/akira_expanded/Akira\ Expanded\ Demo.otf") ;
+  }
+  
+  .akira{
+    font-family: 'Akira', "Lexend", monospace;
+  } */
+
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #737373 #404040;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 16px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #404040;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #737373;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }
+  .imgScale {
+    --tw-translate-x: 0;
+    --tw-translate-y: 0;
+    --tw-rotate: 0;
+    --tw-skew-x: 0;
+    --tw-skew-y: 0;
+    --tw-scale-x: 5;
+    --tw-scale-y: 5;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+
+.bgSmall {
+
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.09);
+
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(6.2px);
+-webkit-backdrop-filter: blur(6.2px);
+border: 1px solid rgba(255, 255, 255, 0.11);
+}
+
+
+.lexend200 {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.lexend200 {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+
+.bgBlr{
+  /* From https://css.glass */
+background: rgba(19, 1, 1, 0.21);
+
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(4.8px);
+-webkit-backdrop-filter: blur(4.8px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+input::-webkit-input-placeholder {
+  color: white; /*Change the placeholder color*/
+  opacity: 0.2; /*Change the opacity between 0 and 1*/
+}
+
+input:not([type="button"]):not([type="submit"]):not([type="reset"]):hover, input:not([type="button"]):not([type="submit"]):not([type="reset"]):focus, textarea:hover, textarea:focus, select:hover, select:focus 
+{    
+    border:1px solid #2df22d81;    
+    outline:none;
+}
