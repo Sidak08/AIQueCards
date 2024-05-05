@@ -1,4 +1,5 @@
 import Navbar from '@/components/common/Navbar';
+import { GridBackgroundDemo } from '@/components/ui/GridBackgroundDemo';
 import React, { useState } from 'react';
 
 export default function Dashboard() {
@@ -55,10 +56,11 @@ export default function Dashboard() {
     <>
 
       <Navbar  />
+      <GridBackgroundDemo />
 
-      <div className='pt-16'>
+      <div className='pt-16 flex items-center justify-center h-[80vh] flex-col'>
       
-      <p className="text-3xl mt-5 text-white inter text-center mb-3">Dashboard to upload audio files : </p>
+      <p className="text-3xl mt-5 text-white inter text-center mb-8">Dashboard to upload audio files </p>
       <form className='flex items-center justify-center flex-col' onSubmit={handleFormSubmit}>
         <input onChange={handleFileChange} className='pl-[200px] mb-8' name="lecture" accept=".mp3" type="file"></input>
         <p className='text-white lexend mb-8'>{file?.name}</p>
