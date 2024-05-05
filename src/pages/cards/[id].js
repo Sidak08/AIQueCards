@@ -1,17 +1,36 @@
 import { GridBackgroundDemo } from "@/components/ui/GridBackgroundDemo";
 import Spotlight from "@/components/ui/spotlight";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import GettingHandAns from "../trial";
+
+///////// NEW STUFF ADDED USE STATE
+
+///////// NEW STUFF ADDED USE STATE
+
+// import logo from './logo.svg';
+import * as tf from "@tensorflow/tfjs";
+import * as handpose from "@tensorflow-models/handpose";
+import Webcam from "react-webcam";
+
+import { drawHand } from "../../utilities";
+
+///////// NEW STUFF IMPORTS
+import * as fp from "fingerpose";
+import victory from "../../victory.png";
+import thumbs_up from "../../thumbs_up.png";
 
 export default function Card() {
   const router = useRouter();
   console.log(router.query.id);
+
+  const [i, setI] = useState(0);
 
   const data = [
     {
@@ -48,7 +67,7 @@ export default function Card() {
     const syncPointer = (event) => {
       const { clientX, clientY } = event;
       setPointerPosition({ x: clientX, y: clientY });
-      console.log({ x: clientX, y: clientY });
+      //console.log({ x: clientX, y: clientY });
       document.documentElement.style.setProperty("--x", clientX.toFixed(2));
       document.documentElement.style.setProperty("--y", clientY.toFixed(2));
     };
@@ -65,6 +84,184 @@ export default function Card() {
     newVisibleAnswers[index] = !newVisibleAnswers[index];
     setVisibleAnswers(newVisibleAnswers);
   };
+
+  const [ans, setAns] = useState();
+  const [finalAns, setFinalAns] = useState("");
+  const [lastAns, setLastAns] = useState("");
+  const [ansArray, setAnsArray] = useState([]);
+
+  //console.log("ans ans ans=>",ans);
+  //console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++", lastAns);
+
+  //================================================================
+  //===============================================================
+
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  ///////// NEW STUFF ADDED STATE HOOK
+  const [emoji, setEmoji] = useState(null);
+  const images = { thumbs_up: thumbs_up, victory: victory };
+  ///////// NEW STUFF ADDED STATE HOOK
+
+  const runHandpose = async () => {
+    const net = await handpose.load();
+    console.log("Handpose model loaded.");
+    //  Loop and detect hands
+    setInterval(() => {
+      detect(net);
+    }, 30);
+  };
+
+  const detect = async (net) => {
+    // Check data is available
+    if (
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      // Get Video Properties
+      const video = webcamRef.current.video;
+      const videoWidth = webcamRef.current.video.videoWidth;
+      const videoHeight = webcamRef.current.video.videoHeight;
+
+      // Set video width
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videoHeight;
+
+      // Set canvas height and width
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
+
+      // Make Detections
+      const hand = await net.estimateHands(video);
+      // console.log(hand);
+
+      ///////// NEW STUFF ADDED GESTURE HANDLING
+
+      if (hand.length > 0) {
+        const GE = new fp.GestureEstimator([
+          fp.Gestures.VictoryGesture,
+          fp.Gestures.ThumbsUpGesture,
+        ]);
+        const gesture = await GE.estimate(hand[0].landmarks, 4);
+        if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
+          // console.log(gesture.gestures);
+
+          const confidence = gesture.gestures.map(
+            (prediction) => prediction.confidence
+          );
+          const maxConfidence = confidence.indexOf(
+            Math.max.apply(null, confidence)
+          );
+          setAnsArray((prevArray) => [
+            ...prevArray,
+            gesture.gestures[maxConfidence].name,
+          ]);
+          console.log(
+            "gesture.gestures[maxConfidence].name=>",
+            gesture.gestures[maxConfidence].name
+          );
+          setEmoji(gesture.gestures[maxConfidence].name);
+          //console.log(emoji);
+          setAns(gesture.gestures[maxConfidence].name);
+          setAnsArray((prevArray) => [
+            ...prevArray,
+            gesture.gestures[maxConfidence].name,
+          ]);
+        }
+      }
+
+      ///////// NEW STUFF ADDED GESTURE HANDLING
+
+      // Draw mesh
+      const ctx = canvasRef.current.getContext("2d");
+      drawHand(hand, ctx);
+    }
+  };
+
+  useEffect(() => {
+    runHandpose();
+  }, []);
+
+  const findMajoritySimilarStringInArray = (array) => {
+    console.log("ans arry", array);
+    // Create an object to store the frequency of each string
+    const frequencyMap = {};
+
+    // Iterate through the array to count the occurrences of each string
+    array.forEach((item) => {
+      if (item in frequencyMap) {
+        frequencyMap[item]++;
+      } else {
+        frequencyMap[item] = 1;
+      }
+    });
+
+    // Find the string with the highest frequency
+    let majorityString = "";
+    let maxFrequency = 6;
+    Object.entries(frequencyMap).forEach(([string, frequency]) => {
+      if (frequency >= maxFrequency) {
+        majorityString = string;
+        maxFrequency = frequency;
+
+        console.log(
+          "majority string====================>",
+          array,
+          majorityString
+        );
+
+        setLastAns(majorityString); // Set the majority similar string as the final answer
+        setAnsArray([]); // Clear the array after processing
+
+        if (lastAns == "victory") {
+          // Assuming last answer index is 4
+          // Trigger action when last answer is about to change
+          document.querySelector(".swiper-button-next").click(); // Click on the button with class "swiper-button-prev"
+          setI((prev) => prev + 1);
+        }
+
+        if (lastAns == "thumbs_up") {
+          console.log("togellling ans", i);
+          toggleAnswerVisibility(i);
+        }
+      }
+    });
+
+    return majorityString;
+  };
+
+  const [flag, setFlag] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setFlag((prev) => prev + 1); // Increment flag every 3 seconds
+    }, 3000); // Call every 3 seconds
+
+    // Cleanup function to clear the interval when component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    async function call() {
+      const ans = await findMajoritySimilarStringInArray(ansArray);
+      console.log("settttting last ans", ans);
+    }
+
+    call();
+  }, [flag]);
+
+  //===============================================================
+  //===============================================================
+
+  // useEffect(() => {
+  //   // Check if the current answer is about to change
+  //   if (lastAns == "victory") { // Assuming last answer index is 4
+  //     // Trigger action when last answer is about to change
+  //     document.querySelector('.swiper-button-next').click(); // Click on the button with class "swiper-button-prev"
+  //   }
+  // }, [lastAns]); // Run this effect whenever currentAnswerIndex changes
 
   return (
     <div className="text-white relative">
@@ -87,7 +284,11 @@ export default function Card() {
         >
           {data.map((card, index) => (
             <SwiperSlide className={`ml-${index * 4}`}>
-              <article className={`w-[400px] h-[300px] mx-auto`} key={index} data-glow>
+              <article
+                className={`w-[400px] h-[300px] mx-auto`}
+                key={index}
+                data-glow
+              >
                 <div data-glow></div>
                 <div
                   onClick={() => toggleAnswerVisibility(index)}
@@ -95,7 +296,9 @@ export default function Card() {
                 >
                   <p className="inter text-2xl">{card?.question}</p>
                   {visibleAnswers[index] && (
-                    <p className="lexend text-[#bec2c4] opacity-75">{card?.answer}</p>
+                    <p className="lexend text-[#bec2c4] opacity-75">
+                      {card?.answer}
+                    </p>
                   )}
                 </div>
               </article>
@@ -103,6 +306,36 @@ export default function Card() {
           ))}
         </Swiper>
       </div>
+
+      <Webcam
+        ref={webcamRef}
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          zindex: 9,
+          width: 640,
+          height: 480,
+        }}
+      />
+
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          zindex: 9,
+          width: 640,
+          height: 480,
+        }}
+      />
     </div>
   );
 }
