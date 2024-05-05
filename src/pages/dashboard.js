@@ -1,7 +1,10 @@
+import Navbar from '@/components/common/Navbar';
 import React, { useState } from 'react';
 
 export default function Dashboard() {
   const [flashCards, setFlashCards] = useState([]);
+
+  const [file, setFile] = useState();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -37,23 +40,36 @@ export default function Dashboard() {
     });
   };
 
-  return (
-    <div>
-      <h2>Dashboard</h2>
-      <form onSubmit={handleFormSubmit}>
-        <input name="lecture" accept=".mp3" type="file"></input>
-        <button type="submit" className="bg-white">Submit</button>
-      </form>
+  const handleFileChange = (e) => {
+    console.log("called");
+    console.log(e);
+    // Update the file state when the input value changes
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile?.name);
+  };
 
-      {/* Display flash cards */}
-      <div>
-        {flashCards.map((card, index) => (
-          <div key={index}>
-            <h3>{card.question}</h3>
-            <p>{card.answer}</p>
-          </div>
-        ))}
-      </div>
+  console.log(file);
+
+  return (
+
+    <>
+
+      <Navbar  />
+
+      <div className='pt-16'>
+      
+      <p className="text-3xl mt-5 text-white inter text-center mb-3">Dashboard to upload audio files : </p>
+      <form className='flex items-center justify-center flex-col' onSubmit={handleFormSubmit}>
+        <input onChange={handleFileChange} className='pl-[200px] mb-8' name="lecture" accept=".mp3" type="file"></input>
+        <p className='text-white lexend mb-8'>{file?.name}</p>
+        <button className='bg-white rounded-md px-3 py-2' type="submit">Submit</button>
+      </form> 
+
+
     </div>
+    
+    </>
+
+    
   );
 }
