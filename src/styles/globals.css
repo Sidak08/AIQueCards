@@ -14,6 +14,8 @@ body {
     color: white ;
 }
 
+
+
 .lexend {
     font-family: "Lexend", sans-serif;
     font-optical-sizing: auto;
@@ -40,14 +42,14 @@ border: 1px solid rgba(0, 0, 0, 0.3);
     box-shadow: rgba(102, 116, 204, 0.25) 0px 4px 10px;
 }
 
-/* @font-face {
+@font-face {
     font-family: "Akira";
-    src: url("../src/assets/fonts/akira_expanded/Akira\ Expanded\ Demo.otf") ;
+    src: url("../../utils/fonts/akira_expanded/Akira\ Expanded\ Demo.otf") ;
   }
   
   .akira{
     font-family: 'Akira', "Lexend", monospace;
-  } */
+  }
 
 
 /* ===== Scrollbar CSS ===== */
