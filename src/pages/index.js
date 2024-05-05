@@ -37,9 +37,12 @@ export default function Home() {
       </div>
       {/* three cards  */}
       <div className="top-[700px] w-full inter pb-8 relative text-white">
-        <p className="text-5xl text-center mb-3">How It Works ?</p>
+        <p className="text-5xl text-center mb-3">
+          Want To Have A Brighter Future
+        </p>
         <p className="text-[#bec2c4] opacity-80 lexend text-center mb-8">
-          Discover Your Perfect cards in 3 Simple Steps :{" "}
+          We Can Help You With That By Providing You With The Founding Pillars
+          You Need
         </p>
         <Card className={"w-[100vw] "} />
       </div>
