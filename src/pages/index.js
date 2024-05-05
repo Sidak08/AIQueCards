@@ -7,7 +7,7 @@ import Image from "next/image";
 import city from "../assets/alys-chen-20200929-1-3.jpg";
 import { Sparkels } from "@/components/homepage/Sparkels";
 import Spotlight from "@/components/ui/spotlight";
-import Card from "../components/common/Card.js";
+import Card from "@/components/common/Card.js";
 
 const inter = Inter({ subsets: ["latin"] });
 

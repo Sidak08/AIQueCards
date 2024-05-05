@@ -4,36 +4,26 @@ const formidable = require('formidable');
 export default async function convert(req, res) {	
 	if (!req.method === "POST") return res.status(400).json({message: "not post"})	
 
-	const form = formidable.formidable({})
-
-	let lecture;
+	const form = new formidable.IncomingForm()
 
 	try {
-		const [feilds, files] = await form.parse(req)
+		form.on("file", async (name, file) => {
+			console.log(name)
 
-		lecture = files["lecture"]
+			const client = new asmbly.AssemblyAI({
+			  apiKey: process.env.STT_AI_API_KEY,
+			});
 
-		if (lecture === undefined) {
-			throw new Errow("lecture doesn't exist")
-		}	
+			const transcript = await client.transcripts.transcribe({
+				audio: file.filepath,
+				speaker_labels: true,
+			})
+
+			res.status(200).json({ message: "success", text: transcript.text })	
+		}).parse(req)
 	} catch (err) {
-		console.error(err)
-
-		if (err.code === formidable.errors.maxFieldsExceeded) {
-			
-        }	
+		console.error(err)	
 	}
-
-	const client = new asmbly.AssemblyAI({
-	  apiKey: process.env.STT_AI_API_KEY,
-	});
-
-	const text = await client.transcripts.transcribe({
-		audio: lecture[0].filepath,
-		speaker_labels: true,
-	})
-
-	res.status(200).json({ message: "success", text })	
 }
 
 export const config = {
