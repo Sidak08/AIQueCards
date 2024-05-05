@@ -70,23 +70,42 @@ export default function Dashboard() {
   return (
 
     <>
+    
+    <Navbar className={" -pb-16"}/>
+<GridBackgroundDemo />
 
-      <Navbar  />
-      <GridBackgroundDemo />
+<div className='pt-16 h-[90vh] flex items-center justify-center'>
 
-      <div className='pt-16 flex items-center justify-center h-[80vh] flex-col'>
+
+
+    <div className='flex items-center justify-center'>
+
       
-      <p className="text-3xl mt-5 text-white inter text-center mb-8">Dashboard to upload audio files </p>
-      <form className='flex gap-x-3 items-center justify-center flex-col' onSubmit={handleFormSubmit}>
-        <input onChange={handleFileChange} className='pl-[200px] mb-8' name="lecture" accept=".mp3" type="file"></input>
-        <p className='text-white lexend mb-8'>{file}</p>
+      
+
+      <div className='dbForm  mx-auto flex items-center justify-center p-8 rounded-md flex-col'>
+      
+      
+      <p className="text-3xl capitalize  text-white inter text-center ">Dashboard to upload audio files </p>
+      <form className='flex gap-x-3 pt-10 items-center justify-center flex-col' onSubmit={handleFormSubmit}>
+        <input onChange={handleFileChange} className=' mb-8' title='' name="lecture" accept=".mp3" type="file"></input>
+        <p className='text-white lexend mb-8'>{file ? file : "No file selected"}</p>
         <button className='bg-white rounded-md px-3 py-2' type="submit">Submit</button>
       </form> 
+      
 
 
     </div>
-    
+
+    </div>
+
+
+</div>
+
     </>
+
+    
+
 
     
   );
