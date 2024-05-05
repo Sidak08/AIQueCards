@@ -53,5 +53,6 @@ const sendReqestGemenai = async (info) => {
   const response = await result.response;
   text = response.text();
   console.log("text-->", text);
+  localStorage.setItem("qcs", JSON.stringify(text));
   return text;
 };
