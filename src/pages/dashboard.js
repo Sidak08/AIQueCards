@@ -1,14 +1,21 @@
 import Navbar from '@/components/common/Navbar';
 import { GridBackgroundDemo } from '@/components/ui/GridBackgroundDemo';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function Dashboard() {
+  const router = useRouter();
   const [flashCards, setFlashCards] = useState([]);
 
   const [file, setFile] = useState();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    console.log("converting ...");
+
+    var toastId = toast.loading("converting ...");
 
     fetch("/api/convert", {
       method: "POST",
@@ -33,12 +40,21 @@ export default function Dashboard() {
 
           // Save to localStorage
           localStorage.setItem('flashCards', JSON.stringify(newFlashCards));
+          toast.success("Conversion done !!");
+          console.log("Conversion done !!");
+          router.push('/cards/xxx');
+
+          
         })
         .catch((err) => {
           console.error(err);
         });
       }
     });
+
+
+    toast.dismiss(toastId);
+
   };
 
   const handleFileChange = (e) => {
@@ -61,9 +77,9 @@ export default function Dashboard() {
       <div className='pt-16 flex items-center justify-center h-[80vh] flex-col'>
       
       <p className="text-3xl mt-5 text-white inter text-center mb-8">Dashboard to upload audio files </p>
-      <form className='flex items-center justify-center flex-col' onSubmit={handleFormSubmit}>
+      <form className='flex gap-x-3 items-center justify-center flex-col' onSubmit={handleFormSubmit}>
         <input onChange={handleFileChange} className='pl-[200px] mb-8' name="lecture" accept=".mp3" type="file"></input>
-        <p className='text-white lexend mb-8'>{file?.name}</p>
+        <p className='text-white lexend mb-8'>{file}</p>
         <button className='bg-white rounded-md px-3 py-2' type="submit">Submit</button>
       </form> 
 

@@ -25,6 +25,7 @@ import { drawHand } from "../../utilities";
 import * as fp from "fingerpose";
 import victory from "../../victory.png";
 import thumbs_up from "../../thumbs_up.png";
+import Navbar from "@/components/common/Navbar";
 
 export default function Card() {
   const router = useRouter();
@@ -126,7 +127,7 @@ export default function Card() {
           fp.Gestures.VictoryGesture,
           fp.Gestures.ThumbsUpGesture,
         ]);
-        const gesture = await GE.estimate(hand[0].landmarks, 8);
+        const gesture = await GE.estimate(hand[0].landmarks, 6);
         if (gesture.gestures !== undefined && gesture.gestures.length > 0) {
           // console.log(gesture.gestures);
 
@@ -247,6 +248,9 @@ export default function Card() {
 
   return (
     <div className="text-white relative">
+
+      <Navbar />
+
       <GridBackgroundDemo />
 
       <Spotlight
@@ -254,11 +258,11 @@ export default function Card() {
         fill="white"
       />
 
-      <p className="text-white ">Card: {router.query.id}</p>
+      {/* <p className="text-white ">Card: {router.query.id}</p> */}
 
-      <p className="text-4xl font-bold text-center mb-8">Your Flash Cards:</p>
+      <p className="text-4xl font-bold text-center pt-16 mb-2">Your Flash Cards:</p>
 
-      <div className="flex w-[80%] h-[80vh] mx-auto p-5 mainCard ">
+      <div className="flex w-[80%] h-[40vh] mx-auto p-5 mainCard ">
         <Swiper
           className={"flex item-center justify-center mySwiper"}
           navigation={true}
@@ -297,10 +301,11 @@ export default function Card() {
           marginRight: "auto",
           left: 0,
           right: 0,
+          top : "55vh",
           textAlign: "center",
           zindex: 9,
           width: 640,
-          height: 480,
+          height: 300,
         }}
       />
 
@@ -312,10 +317,11 @@ export default function Card() {
           marginRight: "auto",
           left: 0,
           right: 0,
+          top : "55vh",
           textAlign: "center",
           zindex: 9,
           width: 640,
-          height: 480,
+          height: 300,
         }}
       />
     </div>
