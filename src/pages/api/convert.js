@@ -1,37 +1,43 @@
-const speech = require("@google-cloud/speech");
+const asmbly = require("assemblyai")
+const formidable = require('formidable');
 
 export default async function convert(req, res) {	
-	const client = new speech.SpeechClient();
+	if (!req.method === "POST") return res.status(400).json({message: "not post"})	
 
-	const config = {
-	  encoding: "mp3",
-	  sampleRateHertz: 16000,
-	  languageCode: 'en-US',
-	};
+	const form = formidable.formidable({})
 
-	const audio = {
-	  content: req.body.toString('base64'),
-	};
+	let lecture;
 
-	const request = {
-	  config: config,
-	  audio: audio,
-	};
+	try {
+		const [feilds, files] = await form.parse(req)
 
-	// Detects speech in the audio file
-	const [response] = await client.recognize(request);
-	
-	const transcription = response.results
-  .map(result => result.alternatives[0].transcript)
-  .join('\n');
+		lecture = files["lecture"]
 
-	res.status(200).json({ message: "success", transcription })
+		if (lecture === undefined) {
+			throw new Errow("lecture doesn't exist")
+		}	
+	} catch (err) {
+		console.error(err)
+
+		if (err.code === formidable.errors.maxFieldsExceeded) {
+			
+        }	
+	}
+
+	const client = new asmbly.AssemblyAI({
+	  apiKey: process.env.STT_AI_API_KEY,
+	});
+
+	const text = await client.transcripts.transcribe({
+		audio: lecture[0].filepath,
+		speaker_labels: true,
+	})
+
+	res.status(200).json({ message: "success", text })	
 }
 
 export const config = {
     api: {
-        bodyParser: {
-            sizeLimit: '10mb' // Set desired value here
-        }
+        bodyParser: false 
     }
 }
