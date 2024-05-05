@@ -9,7 +9,19 @@ export default function Dashboard() {
 					method: "POST",
 					body: new FormData(e.currentTarget)
 				}).then((res) => res.json()).then(data => {
-					console.log(data)
+					if ("text" in data) {
+						fetch("/api/genQuecard", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json"
+							},
+							body: JSON.stringify({
+								value: data.text
+							})
+						}).then(res => res.json()).then(data => {
+							console.log(data)
+						})
+					}		
 				})
 				e.preventDefault()
 			}}>	

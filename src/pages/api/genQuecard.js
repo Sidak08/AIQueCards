@@ -37,14 +37,24 @@ const sendReqestGemenai = async (info) => {
 	const genAI = new GoogleGenerativeAI(apiKey);
 	const prompt = `Give me 5 quecards in a key value pair format [
 	{
-		question: "question",
-		answer: "answer",
+		"question": "question",
+		"answer": "answer",
 	}   
 	] for the following topic ${info.value}`;
-	const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-	const result = await model.generateContent(prompt);
-	const response = await result.response;
-	const text = response.text();
+
+	let text
+
+	try {
+		const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+		const result = await model.generateContent(prompt);
+		const response = await result.response;
+		text = response.text();
+	} catch (err) {
+		console.log(err)
+	}
+
+	console.log("model", model)
+	console.log("resp", response)
 	console.log(text)
 	return text
 };
