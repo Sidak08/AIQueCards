@@ -25,7 +25,12 @@ export default function TestSendFile() {
 
 			<p className="text-4xl pt-20 text-white font-bold text-center mb-8">Upload mp3 </p>
 
-			<form className="pt-20 flex items-center justify-center flex-col gap-y-4 " method="post" action="/api/convert" encType="multipart/form-data">
+			<form 
+				className="pt-20 flex items-center justify-center flex-col gap-y-4" 
+				method="post" 
+				action="/api/convert" 
+				encType="multipart/form-data"
+			>
 				<input className="mx-auto pl-[12rem] " name="lecture" accept=".mp3" type="file"></input>
 				<button className="bg-white rounded-md p-2" type="submit">Submit</button>
 			</form>	
